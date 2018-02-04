@@ -1,8 +1,25 @@
 #!/bin/bash
+# Written for Fedora, dependent package names may differ...
 
-mkdir -p ~/bin
-mkdir -p ~/go/src
-#sudo dnf -y install golang
+echo " .:Run Pre-Build Tests:. "
+
+rpm -q golang || needsdeps="true"
+
+if [ $needsdeps ]; then
+  echo "golang not installed, install that as root first!"
+  exit 1
+else echo "pre-build tests passed, starting build"
+fi
+
+if [ ! -d "~/bin" ]; then
+  mkdir -p ~/bin
+fi
+
+if [ ! -d "~/go/src" ]; then
+  mkdir -p ~/go/src
+fi
+
+
 export GOPATH=~/go
 cd $GOPATH/src/
 mkdir github.com
